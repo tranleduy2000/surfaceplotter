@@ -11,109 +11,100 @@
 */
 package net.ericaro.surfaceplotter.beans;
 
-import java.awt.Component;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.beans.PropertyChangeEvent;
-
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JComboBox;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
 
 
 /**
  * @author eric
- *
  */
 public abstract class JEnumComboBox<T extends Enum<T>> extends JComboBox {
 
-	
-	
+
+    ModelBindedBeanProperty<T> property = new ModelBindedBeanProperty<T>("surfaceModel") {
+        @Override
+        protected void onPropertyChanged(PropertyChangeEvent evt) {
+            Object newValue = evt.getNewValue();
+            if (newValue != null)
+                setSelectedItem((T) newValue);
+        }
+    };
 
 
+    /**
+     *
+     */
+    public JEnumComboBox(T[] values, String property) {
+        super(values);
+        this.property.setPropertyName(property);
+        setRenderer(new DefaultListCellRenderer() {
+            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                setText(getEnumLabel((T) value));
+                return c;
 
-	ModelBindedBeanProperty<T> property = new ModelBindedBeanProperty<T>("surfaceModel") {
-		@Override protected void onPropertyChanged(PropertyChangeEvent evt) {
-			Object newValue = evt.getNewValue();
-			if (newValue != null)
-				setSelectedItem((T) newValue);
-		}
-	};
-	
-	
-	/**
-	 * 
-	 */
-	public JEnumComboBox(T[] values, String property) {
-		super(values);
-		this.property.setPropertyName(property);
-		setRenderer(new DefaultListCellRenderer() {
-			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-				Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-				setText( getEnumLabel((T) value)  );
-				return c;
-				
-			}
+            }
 
-		});
-	}
+        });
+    }
 
-	protected abstract String getEnumLabel(T value) ;
-	
-	/* intercept the state changed to fire my own
-	 */
-	@Override protected void fireItemStateChanged(ItemEvent e) {
-		T old = property.getProperty();
-		if (old !=null && !old.equals(e.getItem()))
-			property.setProperty((T) e.getItem());
-		super.fireItemStateChanged(e);
-	}
+    protected abstract String getEnumLabel(T value);
 
-	// ##########################################################################
-	// DELEGATED SECTION BEGIN
-	// ##########################################################################
-	
+    /* intercept the state changed to fire my own
+     */
+    @Override
+    protected void fireItemStateChanged(ItemEvent e) {
+        T old = property.getProperty();
+        if (old != null && !old.equals(e.getItem()))
+            property.setProperty((T) e.getItem());
+        super.fireItemStateChanged(e);
+    }
 
-	/**
-	 * @return
-	 * @see net.ericaro.surfaceplotter.beans.BeanProperty#getProperty()
-	 */
-	public T getProperty() {
-		return property.getProperty();
-	}
-
-	
-
-	
-	/**
-	 * @param value
-	 * @see net.ericaro.surfaceplotter.beans.BeanProperty#setProperty(java.lang.Object)
-	 */
-	public void setProperty(T value) {
-		property.setProperty(value);
-	}
-
-	
-	/**
-	 * @return
-	 * @see net.ericaro.surfaceplotter.beans.ModelBindedBeanProperty#getSourceBean()
-	 */
-	public ModelSource getSourceBean() {
-		return property.getSourceBean();
-	}
-	
-	/**
-	 * @param modelSource
-	 * @see net.ericaro.surfaceplotter.beans.ModelBindedBeanProperty#setSourceBean(java.lang.Object)
-	 */
-	public void setSourceBean(ModelSource modelSource) {
-		property.setSourceBean(modelSource);
-	}
+    // ##########################################################################
+    // DELEGATED SECTION BEGIN
+    // ##########################################################################
 
 
-	// ##########################################################################
-	// DELEGATED SECTION END
-	// ##########################################################################
+    /**
+     * @return
+     * @see net.ericaro.surfaceplotter.beans.BeanProperty#getProperty()
+     */
+    public T getProperty() {
+        return property.getProperty();
+    }
+
+
+    /**
+     * @param value
+     * @see net.ericaro.surfaceplotter.beans.BeanProperty#setProperty(java.lang.Object)
+     */
+    public void setProperty(T value) {
+        property.setProperty(value);
+    }
+
+
+    /**
+     * @return
+     * @see net.ericaro.surfaceplotter.beans.ModelBindedBeanProperty#getSourceBean()
+     */
+    public ModelSource getSourceBean() {
+        return property.getSourceBean();
+    }
+
+    /**
+     * @param modelSource
+     * @see net.ericaro.surfaceplotter.beans.ModelBindedBeanProperty#setSourceBean(java.lang.Object)
+     */
+    public void setSourceBean(ModelSource modelSource) {
+        property.setSourceBean(modelSource);
+    }
+
+
+    // ##########################################################################
+    // DELEGATED SECTION END
+    // ##########################################################################
 
 
 }

@@ -15,7 +15,6 @@ import net.ericaro.surfaceplotter.surface.SurfaceModel.PlotColor;
 
 /**
  * @author eric
- *
  */
 public class JPlotColorComboBox extends JEnumComboBox<PlotColor> {
 
@@ -25,76 +24,73 @@ public class JPlotColorComboBox extends JEnumComboBox<PlotColor> {
 //	String grayScaleModeLabel  = PlotColor.GRAYSCALE.getPropertyName();
 //	String fogModeLabel        = PlotColor.FOG.getPropertyName();
 //	
-	
-	
-	String[] labels;
-	
-	/**
-	 * 
-	 */
-	public JPlotColorComboBox() {
-		super(PlotColor.values(), "plotColor");
-		labels = new String[PlotColor.values().length];
-		for (int i = 0; i < PlotColor.values().length; i++)
-			labels[i] = PlotColor.values()[i].getPropertyName() ;
-	}
-
-	
-	
-	
-	@Override protected String getEnumLabel(PlotColor value) {
-		return labels[value.ordinal()];
-	}
-	
-	protected String setEnumLabel(PlotColor value, String newValue) {
-		labels[value.ordinal()] = newValue;
-		return newValue;
-	}
 
 
+    String[] labels;
+
+    /**
+     *
+     */
+    public JPlotColorComboBox() {
+        super(PlotColor.values(), "plotColor");
+        labels = new String[PlotColor.values().length];
+        for (int i = 0; i < PlotColor.values().length; i++)
+            labels[i] = PlotColor.values()[i].getPropertyName();
+    }
 
 
-	public String getHiddenModeLabel() {
-		return getEnumLabel(PlotColor.OPAQUE);
-	}
+    @Override
+    protected String getEnumLabel(PlotColor value) {
+        return labels[value.ordinal()];
+    }
 
-	public void setHiddenModeLabel(String hiddenModeLabel) {
-		firePropertyChange("hiddenModeLabel", getHiddenModeLabel(), setEnumLabel(PlotColor.OPAQUE, hiddenModeLabel));
-	}
-	
+    protected String setEnumLabel(PlotColor value, String newValue) {
+        labels[value.ordinal()] = newValue;
+        return newValue;
+    }
 
-	public String getSpectrumModeLabel() {
-		return getEnumLabel(PlotColor.SPECTRUM);
-		
-	}
 
-	public void setSpectrumModeLabel(String spectrumModeLabel) {
-		firePropertyChange("spectrumModeLabel", getSpectrumModeLabel(), setEnumLabel(PlotColor.SPECTRUM, spectrumModeLabel));
-	}
+    public String getHiddenModeLabel() {
+        return getEnumLabel(PlotColor.OPAQUE);
+    }
 
-	public String getDualShadeModeLabel() {
-		return getEnumLabel(PlotColor.DUALSHADE);
-		
-	}
+    public void setHiddenModeLabel(String hiddenModeLabel) {
+        firePropertyChange("hiddenModeLabel", getHiddenModeLabel(), setEnumLabel(PlotColor.OPAQUE, hiddenModeLabel));
+    }
 
-	public void setDualShadeModeLabel(String dualShadeModeLabel) {
-		firePropertyChange("dualShadeModeLabel", getDualShadeModeLabel(), setEnumLabel(PlotColor.DUALSHADE,dualShadeModeLabel));
-	}
 
-	public String getGrayScaleModeLabel() {
-		return getEnumLabel(PlotColor.GRAYSCALE);
-	}
+    public String getSpectrumModeLabel() {
+        return getEnumLabel(PlotColor.SPECTRUM);
 
-	public void setGrayScaleModeLabel(String grayScaleModeLabel) {
-		firePropertyChange("grayScaleModeLabel", getGrayScaleModeLabel(), setEnumLabel(PlotColor.GRAYSCALE,grayScaleModeLabel));
-	}
+    }
 
-	public String getFogModeLabel() {
-		return getEnumLabel(PlotColor.FOG);
-	}
+    public void setSpectrumModeLabel(String spectrumModeLabel) {
+        firePropertyChange("spectrumModeLabel", getSpectrumModeLabel(), setEnumLabel(PlotColor.SPECTRUM, spectrumModeLabel));
+    }
 
-	public void setFogModeLabel(String fogModeLabel) {
-		firePropertyChange("fogModeLabel", getFogModeLabel(), setEnumLabel(PlotColor.FOG,fogModeLabel));
-	}
-	
+    public String getDualShadeModeLabel() {
+        return getEnumLabel(PlotColor.DUALSHADE);
+
+    }
+
+    public void setDualShadeModeLabel(String dualShadeModeLabel) {
+        firePropertyChange("dualShadeModeLabel", getDualShadeModeLabel(), setEnumLabel(PlotColor.DUALSHADE, dualShadeModeLabel));
+    }
+
+    public String getGrayScaleModeLabel() {
+        return getEnumLabel(PlotColor.GRAYSCALE);
+    }
+
+    public void setGrayScaleModeLabel(String grayScaleModeLabel) {
+        firePropertyChange("grayScaleModeLabel", getGrayScaleModeLabel(), setEnumLabel(PlotColor.GRAYSCALE, grayScaleModeLabel));
+    }
+
+    public String getFogModeLabel() {
+        return getEnumLabel(PlotColor.FOG);
+    }
+
+    public void setFogModeLabel(String fogModeLabel) {
+        firePropertyChange("fogModeLabel", getFogModeLabel(), setEnumLabel(PlotColor.FOG, fogModeLabel));
+    }
+
 }
